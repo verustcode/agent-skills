@@ -130,16 +130,18 @@ Ask user to select by number (e.g., "1,2,3"), "all essential", or "all".
 
 ### Step 5: Generate Install Commands
 
-Generate copy-paste-ready commands based on user selection:
+Generate copy-paste-ready commands based on user selection. **Default to project-level installation (no `-g` flag) unless the user explicitly requests global installation.**
 
 ```bash
 # Essential
-npx skills add <owner/repo@skill> -g -y
-npx skills add <owner/repo@skill> -g -y
+npx skills add <owner/repo@skill> -y
+npx skills add <owner/repo@skill> -y
 
 # Extended
-npx skills add <owner/repo@skill> -g -y
+npx skills add <owner/repo@skill> -y
 ```
+
+If the user specifies global installation, use the `-g` flag: `npx skills add <owner/repo@skill> -g -y`.
 
 ### Step 6: Generate Bundle Config
 
@@ -173,15 +175,17 @@ npx skills ls -a cursor   # Filter by agent
 
 ### Install from Config
 
-Read `.skills-bundle.json`, extract all `source` fields, and generate `npx skills add <source> -g -y` commands.
+Read `.skills-bundle.json`, extract all `source` fields, and generate `npx skills add <source> -y` commands (or with `-g` if previously installed globally).
 
 ### Uninstall Bundle
 
 Read `.skills-bundle.json`, extract all `name` fields, and generate:
 
 ```bash
-npx skills remove <name1> <name2> ... -g -y
+npx skills remove <name1> <name2> ... -y
 ```
+
+Use `-g` if the skills were installed globally.
 
 ### Check for Updates
 
@@ -195,9 +199,10 @@ npx skills update   # Update all installed skills
 | Action | Command |
 |--------|---------|
 | Search skills | `npx skills find <keyword>` |
-| Install skill | `npx skills add <owner/repo@skill> -g -y` |
-| List installed | `npx skills ls -g` |
-| Remove skills | `npx skills remove <name1> <name2> -g -y` |
+| Install skill (Project) | `npx skills add <owner/repo@skill> -y` |
+| Install skill (Global) | `npx skills add <owner/repo@skill> -g -y` |
+| List installed | `npx skills ls` (add `-g` for global) |
+| Remove skills | `npx skills remove <name1> <name2> -y` (add `-g` for global) |
 | Check updates | `npx skills check` |
 | Update all | `npx skills update` |
 
